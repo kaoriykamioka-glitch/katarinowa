@@ -25,6 +25,8 @@
     padding:24px 18px 12px;border-bottom:1px solid var(--line);
     background:var(--paper);position:sticky;top:0;z-index:10;
   }
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:64px;height:auto;object-fit:contain;flex-shrink:0}
   h1{font-size:20px;font-weight:600;letter-spacing:.12em}
   .count{font-size:12px;color:var(--ink-soft);margin-top:4px;letter-spacing:.06em}
   .toolbar{display:flex;gap:8px;margin-top:12px}
@@ -134,7 +136,10 @@
 <body>
 
 <header>
-  <h1>かたりの輪　朗読会</h1>
+  <div class="brand">
+    <img src="logo.png" alt="かたりの輪" class="logo">
+    <h1>かたりの輪　朗読会</h1>
+  </div>
   <div class="count" id="count"></div>
   <div class="toolbar">
     <input class="search" id="search" type="search" placeholder="作品名・作者で検索">
