@@ -28,8 +28,6 @@
     padding:24px 18px 12px;border-bottom:1px solid var(--line);
     background:var(--paper);position:sticky;top:0;z-index:10;
   }
-  .brand{display:flex;align-items:center;gap:10px}
-  .logo{width:64px;height:auto;object-fit:contain;flex-shrink:0}
   h1{font-size:20px;font-weight:600;letter-spacing:.12em}
   .count{font-size:12px;color:var(--ink-soft);margin-top:4px;letter-spacing:.06em}
   .toolbar{display:flex;gap:8px;margin-top:12px}
@@ -72,16 +70,16 @@
     box-shadow:0 1px 3px rgba(31,42,61,.05);
   }
   .spine{
-    width:38px;background:var(--spine);color:#fff;flex-shrink:0;
+    width:32px;background:var(--spine);color:#fff;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
-    writing-mode:vertical-rl;font-size:15px;letter-spacing:.2em;
+    writing-mode:vertical-rl;font-size:11px;letter-spacing:.2em;
     padding:8px 0;overflow:hidden;
   }
   .card.mine .spine{background:var(--accent)}
   .body{flex:1;padding:12px 12px 11px;min-width:0}
   .title{font-size:16px;font-weight:600;letter-spacing:.03em;line-height:1.5;word-break:break-word}
-  .author{font-size:15px;color:var(--ink-soft);margin-top:4px;letter-spacing:.08em}
-  .reader-line{font-size:14px;color:var(--spine);margin-top:5px;letter-spacing:.08em}
+  .author{font-size:13px;color:var(--ink-soft);margin-top:4px;letter-spacing:.08em}
+  .reader-line{font-size:12px;color:var(--spine);margin-top:5px;letter-spacing:.08em}
   .card.mine .reader-line{color:var(--accent)}
   .actions{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:8px}
   .icon-btn{
@@ -139,10 +137,7 @@
 <body>
 
 <header>
-  <div class="brand">
-    <img src="logo.png" alt="かたりの輪" class="logo">
-    <h1>かたりの輪　朗読会</h1>
-  </div>
+  <h1>かたりの輪　朗読会</h1>
   <div class="count" id="count"></div>
   <div class="toolbar">
     <input class="search" id="search" type="search" placeholder="作品名・作者で検索">
@@ -184,6 +179,7 @@
 
 <script>
 const KEY = 'online-roudokukai-sakuhinshu-v1';
+const ME = '神岡';
 
 const SEED = [
  // 2026/07/10
@@ -366,7 +362,7 @@ function render(){
         ${theme ? `<span class="session-theme">${esc(theme)}</span>` : ''}
       </div>
       ${g.map(w=>`
-        <div class="card ${(readerFilter!=='all' && w.reader===readerFilter)?'mine':''}">
+        <div class="card ${w.reader===ME?'mine':''}">
           <div class="spine">${esc(w.reader).slice(0,6)}</div>
           <div class="body">
             <div class="title">${esc(w.title)}</div>
