@@ -9,7 +9,7 @@
 <title>かたりの輪　朗読会</title>
 <script>
 // 更新のたびにこの値を変更する(例: 日付+連番)
-var BUILD_ID = '20260918a';
+var BUILD_ID = '20260919a';
 (function(){
   try{
     fetch(location.pathname + '?_chk=' + Date.now(), {cache:'no-store'})
@@ -95,12 +95,10 @@ var BUILD_ID = '20260918a';
     writing-mode:vertical-rl;font-size:15px;letter-spacing:.2em;
     padding:8px 0;overflow:hidden;
   }
-  .card.mine .spine{background:var(--accent)}
   .body{flex:1;padding:12px 12px 11px;min-width:0}
   .title{font-size:16px;font-weight:600;letter-spacing:.03em;line-height:1.5;word-break:break-word}
   .author{font-size:15px;color:var(--ink-soft);margin-top:4px;letter-spacing:.08em}
   .reader-line{font-size:14px;color:var(--spine);margin-top:5px;letter-spacing:.08em}
-  .card.mine .reader-line{color:var(--accent)}
   .actions{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:8px}
   .icon-btn{
     border:1px solid var(--line);background:var(--card);border-radius:9px;
@@ -348,6 +346,17 @@ function esc(s){
   return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+const READER_COLORS = {
+  '神岡':'#b3402a', '安井':'#31456b', '坂井':'#6b8f3f', '三田村':'#8a5fb0',
+  '徳弘':'#c78a2e', '柳沢':'#2f8f80', '平塚':'#a15c8f', 'みどり':'#4c7fb0'
+};
+function readerColor(name){
+  if(READER_COLORS[name]) return READER_COLORS[name];
+  let hash = 0;
+  for(let i=0;i<name.length;i++) hash = name.charCodeAt(i) + ((hash<<5)-hash);
+  return `hsl(${hash%360},45%,38%)`;
+}
+
 function fmtDate(d){
   const [y,m,day] = d.split('-');
   return `${y}年${+m}月${+day}日`;
@@ -397,12 +406,12 @@ function render(){
         ${theme ? `<span class="session-theme">${esc(theme)}</span>` : ''}
       </div>
       ${g.map(w=>`
-        <div class="card ${(readerFilter!=='all' && w.reader===readerFilter)?'mine':''}">
-          <div class="spine">${esc(w.reader).slice(0,6)}</div>
+        <div class="card">
+          <div class="spine" style="background:${readerColor(w.reader)}">${esc(w.reader).slice(0,6)}</div>
           <div class="body">
             <div class="title">${esc(w.title)}</div>
             <div class="author">${esc(w.author)}</div>
-            <div class="reader-line">読み手：${esc(w.reader)}</div>
+            <div class="reader-line" style="color:${readerColor(w.reader)}">読み手：${esc(w.reader)}</div>
           </div>
           <div class="actions">
             <button class="icon-btn" onclick="openSheet('${w.id}')" aria-label="編集">✎</button>
